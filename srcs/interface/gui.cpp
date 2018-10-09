@@ -1,7 +1,6 @@
 #include "gui.h"
 
-#include "controller.h"
-#include "graphics.h"
+#include <controller.h>
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -16,14 +15,9 @@ QPaintWidget::QPaintWidget(QWidget* parent, TController& controller)
 void QPaintWidget::paintEvent(QPaintEvent* event) {
     QPainter painter(this);
     painter.fillRect(0, 0, width(), height(), Qt::white);
-    painter.setPen(QPen(Qt::blue, 3, Qt::SolidLine));
-    const auto& lines = Controller.GetLinesToDraw();
-    for (const auto& shape : lines) {
-        auto prevPoint = shape[0];
-        for (auto i = 1; i < shape.size(); i++) {
-            NGraphics::DrawLine(&painter, {prevPoint, shape[i]});
-            prevPoint = shape[i];
-        }
+    const auto& shapes = Controller.GetShapesToDraw();
+    for (const auto& shape : shapes) {
+        shape->Draw(painter);
     }
 }
 
@@ -46,13 +40,13 @@ TUserInterface::TUserInterface (TController& controller) {
     ui.gridLayout->addWidget(Plot);
 
     connect(ui.actionNew, &QAction::triggered, [&](bool) {
-        controller.NewLinesHandler();
+        controller.NewShapesHandler();
     });
     connect(ui.actionSave, &QAction::triggered, [&](bool) {
-        controller.SaveLinesHandler();
+        controller.SaveShapesHandler();
     });
     connect(ui.actionOpen, &QAction::triggered, [&](bool) {
-        controller.LoadLinesHandler();
+        controller.LoadShapesHandler();
     });
     connect(ui.actionAbout_LineEditor, &QAction::triggered, [&](bool) {
         ShowAboutMessage();

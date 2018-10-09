@@ -1,6 +1,6 @@
 #pragma once
 
-#include "lines.h"
+#include "model/shape.h"
 #include "ui_designer.h"
 
 class TController;

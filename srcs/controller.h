@@ -1,22 +1,22 @@
 #pragma once
 
-#include "gui.h"
-#include "lines.h"
+#include "interface/gui.h"
+#include "model/shape.h"
 
 class TController {
 private:
-    TLines CurrentLines;
+    TShapes CurrentShapes;
     TUserInterface UI;
     bool IsInDrawMode = false;
 
 public:
     TController();
 
-    const std::vector<TLineShape>& GetLinesToDraw() const;
+    const std::vector<std::unique_ptr<IShape>>& GetShapesToDraw() const;
     // Buttons events
-    void NewLinesHandler();
-    void SaveLinesHandler();
-    void LoadLinesHandler();
+    void NewShapesHandler();
+    void SaveShapesHandler();
+    void LoadShapesHandler();
     void UndoHandler();
     void AboutHandler();
 

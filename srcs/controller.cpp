@@ -1,32 +1,34 @@
 #include "controller.h"
 
+#include "model/polygon.cpp"
+
 TController::TController()
     : UI(*this)
 {
     UI.show();
 }
 
-const std::vector<TLineShape>& TController::GetLinesToDraw() const {
-    return CurrentLines.Lines;
+const std::vector<std::unique_ptr<IShape>>& TController::GetShapesToDraw() const {
+    return CurrentShapes.Data;
 }
 
 
-void TController::NewLinesHandler() {
-    CurrentLines = TLines();
+void TController::NewShapesHandler() {
+    CurrentShapes = TShapes();
     UI.Update();
 }
 
-void TController::SaveLinesHandler() {
-    auto filename = CurrentLines.HasFilename()? std::string() : UI.ShowFileChooseDialog(true);
-    auto result = CurrentLines.Save(std::move(filename));
+void TController::SaveShapesHandler() {
+    auto filename = CurrentShapes.HasFilename()? std::string() : UI.ShowFileChooseDialog(true);
+    auto result = CurrentShapes.Save(std::move(filename));
     if (!result) {
         UI.ShowErrorMessage("Saving failed");
     }
 }
 
-void TController::LoadLinesHandler() {
+void TController::LoadShapesHandler() {
     auto filename = UI.ShowFileChooseDialog(false);
-    auto result = CurrentLines.Load(std::move(filename));
+    auto result = CurrentShapes.Load(std::move(filename));
     if (!result) {
         UI.ShowErrorMessage("Opening failed");
     } else {
@@ -35,7 +37,7 @@ void TController::LoadLinesHandler() {
 }
 
 void TController::UndoHandler() {
-    CurrentLines.Lines.pop_back();
+    CurrentShapes.Data.pop_back();
     IsInDrawMode = false;
     UI.Update();
 }
@@ -43,28 +45,28 @@ void TController::UndoHandler() {
 void TController::AddPointHandler(int x, int y) {
     if (!IsInDrawMode) {
         UI.Plot->setMouseTracking(true);
-        CurrentLines.Lines.emplace_back();
+        CurrentShapes.Data.emplace_back(new TPolygon({x, y}));
         IsInDrawMode = true;
-        CurrentLines.Lines.back().push_back({x, y}); // For floating
+    } else {
+        auto& current = *(dynamic_cast<TPolygon*>(CurrentShapes.Data.back().get()));
+        current.FixKeyPoint();
     }
 
-    CurrentLines.Lines.back().push_back({x, y});
     UI.Update();
 }
 
 void TController::FinishLineHandler() {
     IsInDrawMode = false;
     UI.Plot->setMouseTracking(false);
-    CurrentLines.Lines.back().pop_back();
-    if (CurrentLines.Lines.back().size() < 2) {
-        CurrentLines.Lines.pop_back();
-    }
+    auto& current = *(dynamic_cast<TPolygon*>(CurrentShapes.Data.back().get()));
+    current.FinishConstruction();
     UI.Update();
 }
 
 void TController::MouseMovementHandler(int x, int y) {
     if (IsInDrawMode) {
-        CurrentLines.Lines.back().back() = {x, y};
+        auto& current = *(dynamic_cast<TPolygon*>(CurrentShapes.Data.back().get()));
+        current.MoveLastPoint({x, y});
         UI.Update();
     }
 }
