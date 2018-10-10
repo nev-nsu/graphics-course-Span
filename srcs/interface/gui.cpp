@@ -13,12 +13,22 @@ QPaintWidget::QPaintWidget(QWidget* parent, TController& controller)
 {}
 
 void QPaintWidget::paintEvent(QPaintEvent* event) {
-    QPainter painter(this);
-    painter.fillRect(0, 0, width(), height(), Qt::white);
-    const auto& shapes = Controller.GetShapesToDraw();
-    for (const auto& shape : shapes) {
-        shape->Draw(painter);
+    QImage image(3072, 2048, QImage::Format_ARGB32);
+    {
+        QPainter painter;
+        painter.begin(&image);
+        painter.fillRect(0, 0, 3072, 2048, Qt::white);
+        painter.end();
+        const auto& shapes = Controller.GetShapesToDraw();
+        for (const auto& shape : shapes) {
+            painter.begin(&image);
+            shape->Draw(painter, image);
+            painter.end();
+        }
     }
+    QPainter painterCopy(this);
+    painterCopy.fillRect(0, 0, width(), height(), Qt::white);
+    painterCopy.drawImage(0, 0, image);
 }
 
 void QPaintWidget::mousePressEvent (QMouseEvent* event) {
@@ -45,6 +55,15 @@ TUserInterface::TUserInterface (TController& controller) {
     Plot = new QPaintWidget(this, controller);
     Plot->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
     Plot->setGeometry(QRect(0, 0, 3072, 2048));
+    Plot->setMinimumWidth(3072);
+    Plot->setMaximumWidth(3072);
+    Plot->setMinimumHeight(2048);
+    Plot->setMaximumHeight(2048);
+    // QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    // sizePolicy2.setHorizontalStretch(0);
+    // sizePolicy2.setVerticalStretch(0);
+    // sizePolicy2.setHeightForWidth(Plot->sizePolicy().hasHeightForWidth());
+    // Plot->setSizePolicy(sizePolicy2);
     ui.scrollArea->setWidget(Plot);
 
     connect(ui.actionNew, &QAction::triggered, [&](bool) {

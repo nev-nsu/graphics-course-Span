@@ -16,7 +16,7 @@ TCircle::TCircle(TPoint point)
     : Center(point)
 {}
 
-void TCircle::Draw(TPainter& painter) const {
+void TCircle::Draw(TPainter& painter, QImage& image) const {
     painter.setPen(QPen(Qt::blue, 1, Qt::SolidLine));
     std::cout << "DrawCircle: " << Center.first << " " << Center.second << " " << Radius << std::endl;
 
@@ -31,6 +31,14 @@ void TCircle::Draw(TPainter& painter) const {
     int err = dx - 2*r;
 
     while (x >= y) {
+        painter.drawPoint(x0 + x, y0 + y);
+        painter.drawPoint(x0 + y, y0 + x);
+        painter.drawPoint(x0 - y, y0 + x);
+        painter.drawPoint(x0 - x, y0 + y);
+        painter.drawPoint(x0 - x, y0 - y);
+        painter.drawPoint(x0 - y, y0 - x);
+        painter.drawPoint(x0 + y, y0 - x);
+        painter.drawPoint(x0 + x, y0 - y);
         painter.drawPoint(x0 + x, y0 + y);
         painter.drawPoint(x0 + y, y0 + x);
         painter.drawPoint(x0 - y, y0 + x);

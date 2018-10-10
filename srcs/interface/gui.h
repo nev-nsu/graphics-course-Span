@@ -3,6 +3,8 @@
 #include "model/shape.h"
 #include "ui_designer.h"
 
+#include <set>
+
 class TController;
 class QPaintEvent;
 

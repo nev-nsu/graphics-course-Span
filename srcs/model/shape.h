@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QPainter>
+#include <QImage>
 #include <string>
 #include <optional>
 #include <filesystem>
@@ -17,7 +18,7 @@ public:
 class IShape : public ISerializable {
 public:
     // TODO: as there not contructor anymore make implementations more useful
-    virtual void Draw(TPainter& painter) const = 0;
+    virtual void Draw(TPainter& painter, QImage& image) const = 0;
     virtual ~IShape() {}
 };
 

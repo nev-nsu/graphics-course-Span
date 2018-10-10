@@ -25,7 +25,7 @@ public:
 
     TFill(TPoint point);
 
-    virtual void Draw(TPainter& painter) const override;
+    virtual void Draw(TPainter& painter, QImage& image) const override;
 
     static std::unique_ptr<ISerializable> Read(const std::string& data);
     virtual std::string Write() const override;

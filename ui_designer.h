@@ -1,13 +1,13 @@
 /********************************************************************************
-** Form generated from reading UI file 'designerqirCfR.ui'
+** Form generated from reading UI file 'designerUCkaJE.ui'
 **
 ** Created by: Qt User Interface Compiler version 5.11.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
 
-#ifndef DESIGNERQIRCFR_H
-#define DESIGNERQIRCFR_H
+#ifndef DESIGNERUCKAJE_H
+#define DESIGNERUCKAJE_H
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QAction>
@@ -39,10 +39,16 @@ public:
     QGridLayout *gridLayout;
     QVBoxLayout *verticalLayout_3;
     QHBoxLayout *horizontalLayout;
+    QGroupBox *groupBox_2;
+    QGridLayout *gridLayout_4;
+    QGridLayout *gridLayout_3;
+    QRadioButton *size1;
+    QRadioButton *size2;
+    QRadioButton *size3;
     QGroupBox *groupBox;
     QGridLayout *gridLayout_2;
-    QRadioButton *toolLine;
     QRadioButton *toolCircle;
+    QRadioButton *toolLine;
     QRadioButton *toolFill;
     QCheckBox *mode8;
     QCheckBox *colorDark;
@@ -94,11 +100,52 @@ public:
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setSpacing(6);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
-        groupBox = new QGroupBox(centralwidget);
-        groupBox->setObjectName(QStringLiteral("groupBox"));
+        groupBox_2 = new QGroupBox(centralwidget);
+        groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(groupBox_2->sizePolicy().hasHeightForWidth());
+        groupBox_2->setSizePolicy(sizePolicy);
+        gridLayout_4 = new QGridLayout(groupBox_2);
+        gridLayout_4->setObjectName(QStringLiteral("gridLayout_4"));
+        gridLayout_4->setHorizontalSpacing(0);
+        gridLayout_4->setContentsMargins(0, 0, 0, 0);
+        gridLayout_3 = new QGridLayout();
+        gridLayout_3->setObjectName(QStringLiteral("gridLayout_3"));
+        size1 = new QRadioButton(groupBox_2);
+        size1->setObjectName(QStringLiteral("size1"));
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(size1->sizePolicy().hasHeightForWidth());
+        size1->setSizePolicy(sizePolicy1);
+        size1->setChecked(true);
+
+        gridLayout_3->addWidget(size1, 1, 0, 1, 1);
+
+        size2 = new QRadioButton(groupBox_2);
+        size2->setObjectName(QStringLiteral("size2"));
+        sizePolicy.setHeightForWidth(size2->sizePolicy().hasHeightForWidth());
+        size2->setSizePolicy(sizePolicy);
+
+        gridLayout_3->addWidget(size2, 1, 1, 1, 1);
+
+        size3 = new QRadioButton(groupBox_2);
+        size3->setObjectName(QStringLiteral("size3"));
+        sizePolicy.setHeightForWidth(size3->sizePolicy().hasHeightForWidth());
+        size3->setSizePolicy(sizePolicy);
+
+        gridLayout_3->addWidget(size3, 1, 2, 1, 1);
+
+
+        gridLayout_4->addLayout(gridLayout_3, 0, 0, 1, 1);
+
+
+        horizontalLayout->addWidget(groupBox_2);
+
+        groupBox = new QGroupBox(centralwidget);
+        groupBox->setObjectName(QStringLiteral("groupBox"));
         sizePolicy.setHeightForWidth(groupBox->sizePolicy().hasHeightForWidth());
         groupBox->setSizePolicy(sizePolicy);
         groupBox->setAlignment(Qt::AlignJustify|Qt::AlignVCenter);
@@ -106,6 +153,13 @@ public:
         gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
         gridLayout_2->setVerticalSpacing(6);
         gridLayout_2->setContentsMargins(0, 0, 0, 0);
+        toolCircle = new QRadioButton(groupBox);
+        toolCircle->setObjectName(QStringLiteral("toolCircle"));
+        sizePolicy.setHeightForWidth(toolCircle->sizePolicy().hasHeightForWidth());
+        toolCircle->setSizePolicy(sizePolicy);
+
+        gridLayout_2->addWidget(toolCircle, 0, 2, 1, 1);
+
         toolLine = new QRadioButton(groupBox);
         toolLine->setObjectName(QStringLiteral("toolLine"));
         sizePolicy.setHeightForWidth(toolLine->sizePolicy().hasHeightForWidth());
@@ -113,13 +167,6 @@ public:
         toolLine->setChecked(true);
 
         gridLayout_2->addWidget(toolLine, 0, 1, 1, 1);
-
-        toolCircle = new QRadioButton(groupBox);
-        toolCircle->setObjectName(QStringLiteral("toolCircle"));
-        sizePolicy.setHeightForWidth(toolCircle->sizePolicy().hasHeightForWidth());
-        toolCircle->setSizePolicy(sizePolicy);
-
-        gridLayout_2->addWidget(toolCircle, 0, 2, 1, 1);
 
         toolFill = new QRadioButton(groupBox);
         toolFill->setObjectName(QStringLiteral("toolFill"));
@@ -156,15 +203,15 @@ public:
         scrollArea->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
         scrollArea->setSizeAdjustPolicy(QAbstractScrollArea::AdjustToContents);
         scrollArea->setWidgetResizable(true);
-        scrollAreaWidgetContents = new QWidget();
-        scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
-        scrollAreaWidgetContents->setGeometry(QRect(0, 0, 790, 488));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Preferred);
-        sizePolicy1.setHorizontalStretch(0);
-        sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(scrollAreaWidgetContents->sizePolicy().hasHeightForWidth());
-        scrollAreaWidgetContents->setSizePolicy(sizePolicy1);
-        scrollArea->setWidget(scrollAreaWidgetContents);
+        // scrollAreaWidgetContents = new QWidget();
+        // scrollAreaWidgetContents->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
+        // scrollAreaWidgetContents->setGeometry(QRect(0, 0, 790, 486));
+        // QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        // sizePolicy2.setHorizontalStretch(0);
+        // sizePolicy2.setVerticalStretch(0);
+        // sizePolicy2.setHeightForWidth(scrollAreaWidgetContents->sizePolicy().hasHeightForWidth());
+        // scrollAreaWidgetContents->setSizePolicy(sizePolicy2);
+        // scrollArea->setWidget(scrollAreaWidgetContents);
 
         verticalLayout_3->addWidget(scrollArea);
 
@@ -228,15 +275,19 @@ public:
         actionUndo->setToolTip(QApplication::translate("MainWindow", "Remove last line", nullptr));
 #endif // QT_NO_TOOLTIP
         actionAbout_LineEditor->setText(QApplication::translate("MainWindow", "About LineEditor", nullptr));
+        groupBox_2->setTitle(QString());
+        size1->setText(QApplication::translate("MainWindow", "Size: 1", nullptr));
+        size2->setText(QApplication::translate("MainWindow", "Size: 2", nullptr));
+        size3->setText(QApplication::translate("MainWindow", "Size: 3", nullptr));
         groupBox->setTitle(QString());
-#ifndef QT_NO_TOOLTIP
-        toolLine->setToolTip(QApplication::translate("MainWindow", "Closed multiline", nullptr));
-#endif // QT_NO_TOOLTIP
-        toolLine->setText(QApplication::translate("MainWindow", "Polygon", nullptr));
 #ifndef QT_NO_TOOLTIP
         toolCircle->setToolTip(QApplication::translate("MainWindow", "Circle", nullptr));
 #endif // QT_NO_TOOLTIP
         toolCircle->setText(QApplication::translate("MainWindow", "Circle", nullptr));
+#ifndef QT_NO_TOOLTIP
+        toolLine->setToolTip(QApplication::translate("MainWindow", "Closed multiline", nullptr));
+#endif // QT_NO_TOOLTIP
+        toolLine->setText(QApplication::translate("MainWindow", "Polygon", nullptr));
 #ifndef QT_NO_TOOLTIP
         toolFill->setToolTip(QApplication::translate("MainWindow", "Fill an area with some color", nullptr));
 #endif // QT_NO_TOOLTIP
@@ -263,4 +314,4 @@ namespace Ui {
 
 QT_END_NAMESPACE
 
-#endif // DESIGNERQIRCFR_H
+#endif // DESIGNERUCKAJE_H

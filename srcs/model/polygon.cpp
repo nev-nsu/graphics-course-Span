@@ -7,8 +7,8 @@ TPolygon::TPolygon(TPoint point)
 {}
 
 
-void TPolygon::Draw(TPainter& painter) const {
-    painter.setPen(QPen(Qt::blue, 2, Qt::SolidLine));
+void TPolygon::Draw(TPainter& painter, QImage& image) const {
+    painter.setPen(QPen(Qt::blue, (int) Width, Qt::SolidLine));
     for (auto i = 1; i < KeyPoints.size(); i++) {
         const auto& prevPoint = KeyPoints[i - 1];
         const auto& curPoint = KeyPoints[i];

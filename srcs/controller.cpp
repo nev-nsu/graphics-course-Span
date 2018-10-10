@@ -61,20 +61,34 @@ void TController::AddPointHandler(int x, int y, bool circleSpecific) {
                 if (circleSpecific) {
                     return;
                 }
-                UI.Plot->setMouseTracking(true);
-                CurrentShapes.Data.emplace_back(new TPolygon(TPoint({x, y})));
-                State.IsInDrawMode = true;
+                {
+                    UI.Plot->setMouseTracking(true);
+                    auto newLines = new TPolygon(TPoint({x, y}));
+                    CurrentShapes.Data.emplace_back(newLines);
+                    if (UI.ui.size1->isChecked()) {
+                        newLines->SetWidth(TPolygon::EW_THIN);
+                    } else if (UI.ui.size2->isChecked()) {
+                        newLines->SetWidth(TPolygon::EW_NORMAL);
+                    } else if (UI.ui.size3->isChecked()) {
+                        newLines->SetWidth(TPolygon::EW_BOLD);
+                    }
+                    State.IsInDrawMode = true;
+                }
                 break;
             case EShapeType::EST_Circle:
                 CurrentShapes.Data.emplace_back(new TCircle({x, y}));
                 State.IsInDrawMode = true;
                 break;
             case EShapeType::EST_Fill:
-                // TODO: mine params
                 if (circleSpecific) {
                     return;
                 }
-                CurrentShapes.Data.emplace_back(new TFill({x, y}));
+                {
+                    auto newFill = new TFill({x, y});
+                    CurrentShapes.Data.emplace_back(newFill);
+                    newFill->SetColor(UI.ui.colorDark->isChecked()? TFill::EC_DARK : TFill::EC_LIGHT);
+                    newFill->SetMode(UI.ui.mode8->isChecked()? TFill::EM_EIGHT_CONNECTED : TFill::EM_FOUR_CONNECTED);
+                }
         }
     } else {
         switch (State.LastShape) {
