@@ -5,9 +5,19 @@
 
 class TController {
 private:
+    enum class EShapeType {
+        EST_Lines,
+        EST_Circle,
+        EST_Fill
+    };
+
+    struct {
+        bool IsInDrawMode = false;
+        EShapeType LastShape = EShapeType::EST_Lines;
+    } State;
+
     TShapes CurrentShapes;
     TUserInterface UI;
-    bool IsInDrawMode = false;
 
 public:
     TController();
@@ -21,7 +31,7 @@ public:
     void AboutHandler();
 
     // Mouse events
-    void AddPointHandler(int x, int y);
-    void FinishLineHandler();
+    void AddPointHandler(int x, int y, bool circleSpecific);
+    void FinishDrawHandler();
     void MouseMovementHandler(int x, int y);
 };

@@ -42,3 +42,5 @@ RESOURCES += resources/48x48/res.qrc
 
 QT += core gui
 QT += widgets
+
+CONFIG += qt debug

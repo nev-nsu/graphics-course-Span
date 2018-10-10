@@ -12,9 +12,9 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
-CFLAGS        = -pipe -O2 -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fno-plt -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -std=c++17 -O2 -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fno-plt -std=gnu++1z -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+CFLAGS        = -pipe -g -D_REENTRANT -Wall -W -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -std=c++17 -g -std=gnu++1z -D_REENTRANT -Wall -W -fPIC $(DEFINES)
 INCPATH       = -I. -I. -Isrcs -isystem /usr/include/qt -isystem /usr/include/qt/QtWidgets -isystem /usr/include/qt/QtGui -isystem /usr/include/qt/QtCore -I. -isystem /usr/include/libdrm -I. -I/usr/lib/qt/mkspecs/linux-g++
 QMAKE         = /usr/bin/qmake
 DEL_FILE      = rm -f
@@ -37,7 +37,7 @@ COMPRESS      = gzip -9f
 DISTNAME      = span1.0.0
 DISTDIR = /home/nev/dev/graphics/FF_15312_Sidorova_Span_1/.tmp/span1.0.0
 LINK          = g++
-LFLAGS        = -Wl,-O1 -Wl,-O1,--sort-common,--as-needed,-z,relro,-z,now
+LFLAGS        =
 LIBS          = $(SUBLIBS) -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread -lstdc++fs
 AR            = ar cqs
 RANLIB        =
@@ -55,6 +55,7 @@ SOURCES       = srcs/controller.cpp \
 		srcs/interface/gui.cpp \
 		srcs/model/circle.cpp \
 		srcs/model/fill.cpp \
+		srcs/model/polygon.cpp \
 		srcs/model/shape.cpp qrc_res.cpp \
 		moc_gui.cpp
 OBJECTS       = controller.o \
@@ -62,6 +63,7 @@ OBJECTS       = controller.o \
 		gui.o \
 		circle.o \
 		fill.o \
+		polygon.o \
 		shape.o \
 		qrc_res.o \
 		moc_gui.o
@@ -286,13 +288,13 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
 		/usr/lib/qt/mkspecs/features/resolve_config.prf \
 		/usr/lib/qt/mkspecs/features/default_post.prf \
-		/usr/lib/qt/mkspecs/features/warn_on.prf \
 		/usr/lib/qt/mkspecs/features/qt.prf \
 		/usr/lib/qt/mkspecs/features/resources.prf \
 		/usr/lib/qt/mkspecs/features/moc.prf \
 		/usr/lib/qt/mkspecs/features/unix/opengl.prf \
 		/usr/lib/qt/mkspecs/features/uic.prf \
 		/usr/lib/qt/mkspecs/features/unix/thread.prf \
+		/usr/lib/qt/mkspecs/features/warn_on.prf \
 		/usr/lib/qt/mkspecs/features/qmake_use.prf \
 		/usr/lib/qt/mkspecs/features/file_copies.prf \
 		/usr/lib/qt/mkspecs/features/testcase_targets.prf \
@@ -311,6 +313,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		srcs/interface/gui.cpp \
 		srcs/model/circle.cpp \
 		srcs/model/fill.cpp \
+		srcs/model/polygon.cpp \
 		srcs/model/shape.cpp
 QMAKE_TARGET  = span
 DESTDIR       =
@@ -544,13 +547,13 @@ Makefile: FF_15312_Sidorova_Span_1.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf 
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
 		/usr/lib/qt/mkspecs/features/resolve_config.prf \
 		/usr/lib/qt/mkspecs/features/default_post.prf \
-		/usr/lib/qt/mkspecs/features/warn_on.prf \
 		/usr/lib/qt/mkspecs/features/qt.prf \
 		/usr/lib/qt/mkspecs/features/resources.prf \
 		/usr/lib/qt/mkspecs/features/moc.prf \
 		/usr/lib/qt/mkspecs/features/unix/opengl.prf \
 		/usr/lib/qt/mkspecs/features/uic.prf \
 		/usr/lib/qt/mkspecs/features/unix/thread.prf \
+		/usr/lib/qt/mkspecs/features/warn_on.prf \
 		/usr/lib/qt/mkspecs/features/qmake_use.prf \
 		/usr/lib/qt/mkspecs/features/file_copies.prf \
 		/usr/lib/qt/mkspecs/features/testcase_targets.prf \
@@ -784,13 +787,13 @@ Makefile: FF_15312_Sidorova_Span_1.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf 
 /usr/lib/qt/mkspecs/features/default_pre.prf:
 /usr/lib/qt/mkspecs/features/resolve_config.prf:
 /usr/lib/qt/mkspecs/features/default_post.prf:
-/usr/lib/qt/mkspecs/features/warn_on.prf:
 /usr/lib/qt/mkspecs/features/qt.prf:
 /usr/lib/qt/mkspecs/features/resources.prf:
 /usr/lib/qt/mkspecs/features/moc.prf:
 /usr/lib/qt/mkspecs/features/unix/opengl.prf:
 /usr/lib/qt/mkspecs/features/uic.prf:
 /usr/lib/qt/mkspecs/features/unix/thread.prf:
+/usr/lib/qt/mkspecs/features/warn_on.prf:
 /usr/lib/qt/mkspecs/features/qmake_use.prf:
 /usr/lib/qt/mkspecs/features/file_copies.prf:
 /usr/lib/qt/mkspecs/features/testcase_targets.prf:
@@ -819,7 +822,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents resources/48x48/res.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ui_designer.h srcs/about.h srcs/controller.h srcs/interface/gui.h srcs/model/circle.h srcs/model/fill.h srcs/model/polygon.h srcs/model/shape.h $(DISTDIR)/
-	$(COPY_FILE) --parents srcs/controller.cpp srcs/main.cpp srcs/interface/gui.cpp srcs/model/circle.cpp srcs/model/fill.cpp srcs/model/shape.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents srcs/controller.cpp srcs/main.cpp srcs/interface/gui.cpp srcs/model/circle.cpp srcs/model/fill.cpp srcs/model/polygon.cpp srcs/model/shape.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents designer.ui $(DISTDIR)/
 
 
@@ -860,7 +863,7 @@ compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
 moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
-	g++ -pipe -std=c++17 -O2 -march=x86-64 -mtune=generic -O2 -pipe -fstack-protector-strong -fno-plt -std=gnu++1z -Wall -W -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
+	g++ -pipe -std=c++17 -g -std=gnu++1z -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
 compiler_moc_header_make_all: moc_gui.cpp
 compiler_moc_header_clean:
@@ -897,8 +900,9 @@ controller.o: srcs/controller.cpp srcs/controller.h \
 		srcs/interface/gui.h \
 		srcs/model/shape.h \
 		ui_designer.h \
-		srcs/model/polygon.cpp \
-		srcs/model/polygon.h
+		srcs/model/polygon.h \
+		srcs/model/circle.h \
+		srcs/model/fill.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o controller.o srcs/controller.cpp
 
 main.o: srcs/main.cpp srcs/controller.h \
@@ -921,6 +925,10 @@ circle.o: srcs/model/circle.cpp srcs/model/circle.h \
 fill.o: srcs/model/fill.cpp srcs/model/fill.h \
 		srcs/model/shape.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fill.o srcs/model/fill.cpp
+
+polygon.o: srcs/model/polygon.cpp srcs/model/polygon.h \
+		srcs/model/shape.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o polygon.o srcs/model/polygon.cpp
 
 shape.o: srcs/model/shape.cpp srcs/model/shape.h \
 		srcs/model/circle.h \

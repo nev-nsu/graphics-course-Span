@@ -23,9 +23,15 @@ void QPaintWidget::paintEvent(QPaintEvent* event) {
 
 void QPaintWidget::mousePressEvent (QMouseEvent* event) {
     if (event->button() == Qt::LeftButton) {
-        MouseLeftClick(event->x(), event->y());
+        MouseLeftClick(event->x(), event->y(), false);
     } else if (event->button() == Qt::RightButton) {
         MouseRightClick();
+    }
+}
+
+void QPaintWidget::mouseReleaseEvent(QMouseEvent *event) {
+    if (event->button() == Qt::LeftButton) {
+        MouseLeftClick(event->x(), event->y(), true);
     }
 }
 
@@ -37,7 +43,9 @@ TUserInterface::TUserInterface (TController& controller) {
     ui.setupUi(this);
 
     Plot = new QPaintWidget(this, controller);
-    ui.gridLayout->addWidget(Plot);
+    Plot->setObjectName(QStringLiteral("scrollAreaWidgetContents"));
+    Plot->setGeometry(QRect(0, 0, 3072, 2048));
+    ui.scrollArea->setWidget(Plot);
 
     connect(ui.actionNew, &QAction::triggered, [&](bool) {
         controller.NewShapesHandler();
@@ -54,11 +62,11 @@ TUserInterface::TUserInterface (TController& controller) {
     connect(ui.actionUndo, &QAction::triggered, [&](bool) {
         controller.UndoHandler();
     });
-    connect(Plot, &QPaintWidget::MouseLeftClick, [&](int x, int y) {
-        controller.AddPointHandler(x, y);
+    connect(Plot, &QPaintWidget::MouseLeftClick, [&](int x, int y, bool released) {
+        controller.AddPointHandler(x, y, released);
     });
     connect(Plot, &QPaintWidget::MouseRightClick, [&]() {
-        controller.FinishLineHandler();
+        controller.FinishDrawHandler();
     });
     connect(Plot, &QPaintWidget::MouseMovement, [&](int x, int y) {
         controller.MouseMovementHandler(x, y);

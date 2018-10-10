@@ -16,9 +16,52 @@ namespace {
     const auto readers = {&TPolygon::Read, &TFill::Read, &TCircle::Read};
     const auto signs = {TPolygon::Signature, TFill::Signature, TCircle::Signature};
 
+    auto StartsWith(const std::string& str, const std::string& what) {
+        return str.substr(0, what.size()) == what;
+    }
+
+    auto IsSign(const std::string& str){
+        for (const auto& sign : signs) {
+            if (StartsWith(str, sign)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     // Returns clean strings without empty or connected lines
     std::string ReadChunk(std::istream& stream) {
-        return {}; //TODO: write an implementation
+        static std::string line;
+        std::cout << "readchunk " << line << std::endl;
+        bool firstRun = line.empty();
+        std::ostringstream output;
+        if (!line.empty()) {
+            output << line << ' '; // Chunk signature
+        }
+        while (!stream.eof() && stream.good()) {
+            std::getline(stream, line);
+            std::cout << "test " << line << std::endl;
+            auto start = line.find_first_not_of(" \t\n");
+            if (start == std::string::npos) {
+                continue;
+            }
+            line = line.substr(start, std::string::npos);
+            if (!StartsWith(line, "//")) {
+                if (IsSign(line)) {
+                    if (!firstRun) {
+                        break;
+                    }
+                    firstRun = false;
+                }
+                output << line << " ";
+            }
+        }
+        if (stream.eof()) {
+            line.clear();
+        }
+        std::cout << output.str();
+        return output.str();
     }
 }
 
@@ -43,14 +86,18 @@ bool TShapes::Load(std::string&& filename) {
         while (correctShape && !currentChunk.empty()) {
             correctShape = false;
             for (auto reader : readers) {
+                std::cout << "Try to parse: " << currentChunk << std::endl;
                 auto result = reader(currentChunk);
+                std::cout << "Try to parse: " << (result? "ok" : "fail")  << std::endl;
                 if (result) {
                     auto shape = dynamic_cast<IShape*>(result.release());
                     temporaryData.emplace_back(shape);
+                    std::cout << "Shape found: " << currentChunk << std::endl;
                     correctShape = true;
                     break;
                 }
             }
+            currentChunk = ReadChunk(input);
         }
 
         if (!correctShape) {
@@ -78,7 +125,6 @@ bool TShapes::Save(std::string&& filename) {
     }
 
     try {
-        output << Data.size() << std::endl;
         for (const auto& shape: Data) {
             output << shape->Write() << std::endl;
         }

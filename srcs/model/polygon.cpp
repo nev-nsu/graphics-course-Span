@@ -1,5 +1,7 @@
 #include "polygon.h"
 
+#include <iostream>
+
 TPolygon::TPolygon(TPoint point)
     : KeyPoints({point, point})
 {}
@@ -17,6 +19,7 @@ void TPolygon::Draw(TPainter& painter) const {
 std::unique_ptr<ISerializable> TPolygon::Read(const std::string& data) {
     try {
         std::istringstream input(data);
+        std::cout << "Try to read as TPolygon" << std::endl;
 
         // 1. Check signature
         {
@@ -43,7 +46,7 @@ std::unique_ptr<ISerializable> TPolygon::Read(const std::string& data) {
             input >> point.first >> point.second;
             newPol.KeyPoints.push_back(point);
         }
-
+        newPol.KeyPoints.push_back(newPol.KeyPoints.front());
         return std::unique_ptr<ISerializable>(newPolPtr);
     } catch (...) {
         return {};

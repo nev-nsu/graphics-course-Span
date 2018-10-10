@@ -29,4 +29,6 @@ public:
     void MoveLastPoint(TPoint point);
     void FixKeyPoint();
     void FinishConstruction();
+
+    virtual ~TPolygon() override = default;
 };

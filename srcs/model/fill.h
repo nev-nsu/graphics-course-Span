@@ -32,4 +32,6 @@ public:
 
     void SetMode(EMode mode);
     void SetColor(EColor color);
+
+    virtual ~TFill() override = default;
 };

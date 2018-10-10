@@ -18,19 +18,18 @@ protected:
     void paintEvent(QPaintEvent* event) override;
     void mousePressEvent (QMouseEvent* event) override;
     void mouseMoveEvent (QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 signals:
-    void MouseLeftClick(int x, int y);
+    void MouseLeftClick(int x, int y, bool released);
     void MouseRightClick();
     void MouseMovement(int x, int y);
 };
 
 class TUserInterface : public QMainWindow {
     Q_OBJECT
-private:
-    Ui::MainWindow ui;
-
 public:
+    Ui::MainWindow ui;
     QPaintWidget* Plot;
 
 public:

@@ -18,4 +18,6 @@ public:
     virtual std::string Write() const override;
 
     void MoveLastPoint(TPoint point);
+
+    virtual ~TCircle() override = default;
 };
